@@ -12,12 +12,12 @@ import '../../myHttp.dart';
 
 
 
-class PropertList extends StatefulWidget {
+class UserList extends StatefulWidget {
   @override
-  _PropertListState createState() => _PropertListState();
+  _UserListState createState() => _UserListState();
 }
 
-class _PropertListState extends State<PropertList> {
+class _UserListState extends State<UserList> {
   var width;
   var height;
   List<Property> _property =[];
@@ -59,8 +59,8 @@ class _PropertListState extends State<PropertList> {
 
   @override
   Widget build(BuildContext context) {
-     width = MediaQuery.of(context).size.width;
-     height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
@@ -114,7 +114,7 @@ class _PropertListState extends State<PropertList> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 20,),
-                                  Text("Flats",style: TextStyle(fontSize: 15,color: AppColors.textColor,fontWeight: FontWeight.w700),),
+                                  Text("Flatmates",style: TextStyle(fontSize: 15,color: AppColors.textColor,fontWeight: FontWeight.w700),),
                                   SizedBox(height: 20,),
                                   Expanded(
                                     child: ListView.builder
@@ -174,20 +174,23 @@ class _PropertListState extends State<PropertList> {
                           errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
                         SizedBox(width: 40,),
-                        Column(
-                          children: <Widget>[
-                            SizedBox(height: 3,),
-                            Text(_property[i].title.toUpperCase(),style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 18),),
-                            SizedBox(height: 3,),
-                            Text("Rent:" +_property[i].rent,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
-                            SizedBox(height: 3,),
-                            Text("Type:" +_property[i].vacancy_type,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
-                            SizedBox(height: 3,),
-                            Text("Available For :"+_property[i].open_to,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
-                            SizedBox(height: 3,),
-                            Text(_property[i].address.line_two+" "+_property[i].address.area??"",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
 
-                          ],
+                              SizedBox(height: 15,),
+                              Text(_property[i].title.toUpperCase(),style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 20),),
+                              SizedBox(height: 3,),
+                              Text("Hometown:" +_property[i].rent,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+                              SizedBox(height: 3,),
+                              Text("Hobbies:" +_property[i].vacancy_type,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+
+
+
+                            ],
+                          ),
                         )
                       ],
                     ),

@@ -129,7 +129,7 @@ class _PropertyViewState extends State<PropertyView> {
                         width: double.infinity,
                         child: CompilcatedImageDemo()),
                 SizedBox(height: 20,),
-                Text(title??"",style: TextStyle(color: AppColors.textColor,fontSize: 20,fontWeight: FontWeight.bold),),
+                Text(title.toUpperCase()??"",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                     SizedBox(height: 20,),
 
                     Text("Type",style: TextStyle(color: AppColors.textColor,fontSize: 20,fontWeight: FontWeight.bold),),

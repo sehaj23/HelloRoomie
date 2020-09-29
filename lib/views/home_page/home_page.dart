@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:helloroomie/components/drawer.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
 import 'package:helloroomie/views/propertylist/propert_list.dart';
+import 'package:helloroomie/views/search.dart';
+import 'package:helloroomie/views/user_list/user_list.dart';
 
 import '../../appColors.dart';
 
@@ -20,11 +23,17 @@ class _HomePageState extends State<HomePage> {
     "https://i.redd.it/qjab1s7u0q3z.jpg"
 
   ];
+
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(backgroundColor:Colors.transparent,elevation: 0,iconTheme: new IconThemeData(color: AppColors.textColor)),
+        drawer: DrawerHome(openPageType: DrawerPage.MY_PROFILE,),
+
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -37,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
 
                     children: <Widget>[
+
                       Text("Welcome Sehaj",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 25),),
                     ],
                   ),
@@ -54,17 +64,22 @@ class _HomePageState extends State<HomePage> {
                     onChanged: (String search) {
 
                     },
+                    onSubmitted: (String search){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Search(search)));
+                    },
                     android: (_) => MaterialTextFieldData(
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(0),
                           suffixIcon: Icon(Icons.search,color: AppColors.textColor),
                           hintText: "Search Property by type or address",
+                          hintStyle: TextStyle(color: Colors.black),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: AppColors.textColor, width: 2))),
                     ),
                     ios: (_) => CupertinoTextFieldData(
                       placeholder: "Search Property by type or address",
+                      style: TextStyle(color: Colors.black),
                       suffix: Icon(Icons.search,color: AppColors.textColor,),
                       keyboardAppearance: Brightness.light,
                       decoration: BoxDecoration(
@@ -133,23 +148,28 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-                    Card(
-                      elevation: 10,
-                      child: Container(
-                        width: 100,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomRight,
-                                colors: [AppColors.backgroundColorGradient1,AppColors.backgroundColorGradient2])),
-                        child:  Column(
-                          children: <Widget>[
-                            SizedBox(height: 10,),
-                            Icon(Icons.group,size: 30,color: Colors.white,),
-                            SizedBox(height: 10,),
-                            Text("Flatmate",style: TextStyle(color: Colors.white,fontWeight:FontWeight.w700,fontSize: 12 ),)
-                          ],
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserList()));
+                      },
+                      child: Card(
+                        elevation: 10,
+                        child: Container(
+                          width: 100,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomRight,
+                                  colors: [AppColors.backgroundColorGradient1,AppColors.backgroundColorGradient2])),
+                          child:  Column(
+                            children: <Widget>[
+                              SizedBox(height: 10,),
+                              Icon(Icons.group,size: 30,color: Colors.white,),
+                              SizedBox(height: 10,),
+                              Text("Flatmate",style: TextStyle(color: Colors.white,fontWeight:FontWeight.w700,fontSize: 12 ),)
+                            ],
+                          ),
                         ),
                       ),
                     ),

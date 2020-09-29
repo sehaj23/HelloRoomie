@@ -6,6 +6,8 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../appColors.dart';
 
 class Search extends StatefulWidget {
+  String search;
+  Search(this.search);
   @override
   _SearchState createState() => _SearchState();
 }
@@ -71,16 +73,18 @@ class _SearchState extends State<Search> {
                               android: (_) => MaterialTextFieldData(
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(0),
-                                    suffixIcon: Icon(Icons.search,color: Colors.white54),
-                                    hintText: "Search Property by type or address",
+                                    suffixIcon: Icon(Icons.search,color: Colors.white),
+                                    hintText: widget.search,
                                     hintStyle: TextStyle(color: Colors.white),
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: AppColors.textColor, width: 2))),
                               ),
                               ios: (_) => CupertinoTextFieldData(
-                                placeholder: "Search Property by type or address",
-                                suffix: Icon(Icons.search,color: Colors.white54,),
+                                placeholder: widget.search,
+                                placeholderStyle: TextStyle(color: Colors.white),
+
+                                suffix: Icon(Icons.search,color: Colors.white,),
                                 keyboardAppearance: Brightness.light,
                                 style: TextStyle(color: Colors.white),
                                 decoration: BoxDecoration(
@@ -117,7 +121,7 @@ class _SearchState extends State<Search> {
                           SizedBox(height: 20,),
                           InkWell(
                             onTap: (){
-                              
+
                             },
                             child: Card(
                               elevation: 5,

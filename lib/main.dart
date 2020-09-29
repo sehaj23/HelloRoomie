@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:helloroomie/appColors.dart';
+import 'package:helloroomie/views/home_page/home_base.dart';
 import 'package:helloroomie/views/home_page/home_page.dart';
 import 'package:helloroomie/views/intro_page1.dart';
 import 'package:helloroomie/views/login/login.dart';
 import 'package:helloroomie/views/login/signup.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
+import 'package:helloroomie/views/profile/profile.dart';
 import 'package:helloroomie/views/property_view/property.dart';
 import 'package:helloroomie/views/search.dart';
 
@@ -63,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+
       resizeToAvoidBottomInset : false,
       body: Container(
         width:width,
@@ -109,7 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
              Button.UsableButton("Get Started", AppColors.textColor, (){
                // Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+
             //   Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertyView()));
              //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
              },Colors.white),

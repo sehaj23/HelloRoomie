@@ -304,7 +304,7 @@ class _Vacancy5State extends State<Vacancy5> {
 // Here you can write your code
         String id = jsonData["_id"];
         print(id);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Vacancy6()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Vacancy6(widget.id)));
 
 
 
