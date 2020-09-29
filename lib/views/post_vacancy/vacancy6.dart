@@ -97,11 +97,7 @@ class _Vacancy6State extends State<Vacancy6> {
                           SizedBox(height: 20,),
                           Row(
                             children: <Widget>[
-
                               Text("You are all set up!!",style: TextStyle(color: AppColors.textColor,fontSize: 20,fontWeight: FontWeight.bold),),
-
-
-
                             ],
                           ),
                           SizedBox(height: 20,),

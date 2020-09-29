@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:helloroomie/appColors.dart';
+import 'package:helloroomie/views/home_page/home_page.dart';
 import 'package:helloroomie/views/intro_page1.dart';
 import 'package:helloroomie/views/login/login.dart';
 import 'package:helloroomie/views/login/signup.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
+import 'package:helloroomie/views/search.dart';
 
 import 'components/button.dart';
 import 'components/progress.dart';
@@ -61,8 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset : false,
-
-
       body: Container(
         width:width,
         decoration: BoxDecoration(
@@ -107,7 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
              Button.UsableButton("Get Started", AppColors.textColor, (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
+               // Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>Search()));
              //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
              },Colors.white),
             SizedBox(height: 50,),

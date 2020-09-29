@@ -61,8 +61,6 @@ class _Vacancy4State extends State<Vacancy4> {
       resizeToAvoidBottomInset: false,
       body: Container(
         width:width,
-
-
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
