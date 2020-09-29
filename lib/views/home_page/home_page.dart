@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
+import 'package:helloroomie/views/propertylist/propert_list.dart';
 
 import '../../appColors.dart';
 
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
 
                     InkWell(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Vacancy1()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertList()));
                       },
                       child: Card(
                         elevation: 10,

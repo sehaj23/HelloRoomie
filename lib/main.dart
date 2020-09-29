@@ -7,6 +7,7 @@ import 'package:helloroomie/views/intro_page1.dart';
 import 'package:helloroomie/views/login/login.dart';
 import 'package:helloroomie/views/login/signup.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
+import 'package:helloroomie/views/property_view/property.dart';
 import 'package:helloroomie/views/search.dart';
 
 import 'components/button.dart';
@@ -109,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
              Button.UsableButton("Get Started", AppColors.textColor, (){
                // Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>Search()));
+            //   Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertyView()));
              //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
              },Colors.white),
             SizedBox(height: 50,),

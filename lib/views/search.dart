@@ -115,41 +115,56 @@ class _SearchState extends State<Search> {
                           SizedBox(height: 20,),
                           Text("Results",style: TextStyle(fontSize: 15,color: AppColors.textColor,fontWeight: FontWeight.w700),),
                           SizedBox(height: 20,),
-                          Card(
-                            elevation: 5,
-                            child: Container(
-                              width: width*0.9,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                          InkWell(
+                            onTap: (){
+                              
+                            },
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                              child: Container(
+                                width: width,
+                                height: 120,
 
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        CachedNetworkImage(
-                                          imageUrl: 'https://images.nobroker.in/images/ff80818165ff7a3d0166009c47fc7ad1/ff80818165ff7a3d0166009c47fc7ad1_78010_large.jpg',
-                                          imageBuilder: (context, imageProvider) => Container(
-                                            width: 110.0,
-                                            height: 110.0,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              image: DecorationImage(
-                                                  image: imageProvider, fit: BoxFit.cover),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          CachedNetworkImage(
+                                            imageUrl: 'https://images.nobroker.in/images/ff80818165ff7a3d0166009c47fc7ad1/ff80818165ff7a3d0166009c47fc7ad1_78010_large.jpg',
+                                            imageBuilder: (context, imageProvider) => Container(
+                                              width: 110.0,
+                                              height: 110.0,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(20),
+                                                image: DecorationImage(
+                                                    image: imageProvider, fit: BoxFit.cover),
+                                              ),
                                             ),
+                                            placeholder: (context, url) => CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
                                           ),
-                                          placeholder: (context, url) => CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
-                                        Text("3 bhk appartment")
-                                      ],
-                                    ),
-                                  ],
+                                          SizedBox(width: 10,),
+                                          Column(
+                                            children: <Widget>[
+                                              SizedBox(height: 10,),
+                                              Text("3 BHK Appartment",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 15),),
+                                              SizedBox(height: 10,),
+                                              Text("3 BHK Appartment",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 12),),
+                                              SizedBox(height: 10,),
+                                              Text("3 BHK Appartment",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 12),),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

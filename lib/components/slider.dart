@@ -9,7 +9,7 @@ class CompilcatedImageDemo extends StatelessWidget {
       body: Container(
           child: CarouselSlider(
             options: CarouselOptions(
-              aspectRatio:2.0,
+              aspectRatio:2,
               enableInfiniteScroll: true,
               enlargeCenterPage: true,
               scrollDirection: Axis.horizontal,
