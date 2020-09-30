@@ -3,8 +3,14 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:helloroomie/appColors.dart';
 import 'package:helloroomie/views/home_page/home_page.dart';
+import 'package:helloroomie/views/login/login.dart';
+import 'package:helloroomie/views/profile/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../myHttp.dart';
 
 
 enum DrawerPage { MY_PROFILE,HOME_PAGE }
@@ -20,12 +26,33 @@ class DrawerHome extends StatefulWidget {
 }
 
 class _FeedDrawerState extends State<DrawerHome> {
-
+bool _loading=false;
+String name;
 
   @override
   void initState() {
+    _getUserinfo();
     // TODO: implement initState
     super.initState();
+  }
+  _getUserinfo()async{
+    setState(() {
+      _loading=true;
+    });
+    try{
+      var res= await MyHttp.get("/api/u/profile/fetch/");
+      if(res.statusCode==200){
+        var data = json.decode(res.body);
+        name = data["name"]??"";
+        setState(() {
+          _loading=false;
+        });
+      }else{
+        print(res.statusCode);
+      }
+    }catch(e){
+      print("error "+e);
+    }
   }
 
 
@@ -58,7 +85,7 @@ class _FeedDrawerState extends State<DrawerHome> {
                           placeholder: (context, url) => CircularProgressIndicator(),
                           errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
-                        Text("Ayush Soni",style: TextStyle(color: Colors.white),)
+                        (_loading==false)? Text(name,style: TextStyle(color: Colors.white,fontSize: 15),):showLoading(),
                       ],
                     ),
 
@@ -85,10 +112,29 @@ class _FeedDrawerState extends State<DrawerHome> {
                                         : FontWeight.normal),
                               ),
                               onTap: () {
-                                if (widget.openPageType != DrawerPage.MY_PROFILE)
-//                            Navigator.push(context, MaterialPageRoute(builder: (context) => MyFeed()));
                                   Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                                      builder: (context) => Profile()));
+                              },
+                            ),
+                            ListTile(
+                              title: Text(
+                                'Logout',
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 20,
+                                    fontWeight: (widget.openPageType ==
+                                        DrawerPage.MY_PROFILE)
+                                        ? FontWeight.bold
+                                        : FontWeight.normal),
+                              ),
+                              onTap: ()async {
+                                var sharedPreference = await SharedPreferences.getInstance();
+                                sharedPreference.remove("token");
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Login()),
+                                      (Route<dynamic> route) => false,
+                                );
                               },
                             ),
 
@@ -101,4 +147,12 @@ class _FeedDrawerState extends State<DrawerHome> {
     )
     ;
   }
+Container showLoading() {
+  return Container(
+    height: double.infinity,
+    child: Center(
+      child: PlatformCircularProgressIndicator(),
+    ),
+  );
+}
 }

@@ -15,7 +15,6 @@ class Property{
   String description;
   Address address;
 
-  Property(this.available_from,this.id,this.title,this.locality,this.vacancy_type,this.open_to,this.rent,this.deposite,this.author,this.description);
 
   Property.fromJson(Map<String,dynamic> json){
     this.available_from=json["available_from"]??"NOW";

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -8,6 +10,7 @@ import 'package:helloroomie/views/search.dart';
 import 'package:helloroomie/views/user_list/user_list.dart';
 
 import '../../appColors.dart';
+import '../../myHttp.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String name;
+  bool _loading=false;
 
   final List<String> numbers = ["https://media.istockphoto.com/photos/posters-in-cozy-apartment-interior-picture-id943910360?k=6&m=943910360&s=612x612&w=0&h=FRRS8m8z3641NBa84oNJNdMzMysA9X7r0yiAUa_fILc=",
     "https://img.staticmb.com/mbimages/project/Photo_h310_w462/2019/12/17/Project-Photo-15-Sai-Gangothri-Hill-Crest-Bangalore-5129271_560_1131_310_462.jpg",
@@ -26,6 +31,35 @@ class _HomePageState extends State<HomePage> {
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
+  _getUserinfo()async{
+    setState(() {
+      _loading=true;
+    });
+    try{
+      var res= await MyHttp.get("/api/u/profile/fetch/");
+      if(res.statusCode==200){
+        var data = json.decode(res.body);
+        name = data["name"]??"";
+
+        setState(() {
+          _loading=false;
+        });
+      }else{
+        print(res.statusCode);
+      }
+
+    }catch(e){
+      print("error "+e);
+    }
+
+  }
+  @override
+  void initState() {
+    _getUserinfo();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -35,11 +69,12 @@ class _HomePageState extends State<HomePage> {
         drawer: DrawerHome(openPageType: DrawerPage.MY_PROFILE,),
 
         resizeToAvoidBottomInset: false,
-        body: SafeArea(
+        body:(_loading==false)? SafeArea(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 30,),
                 SizedBox(height: 30,),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 1, 1, 3),
@@ -47,7 +82,7 @@ class _HomePageState extends State<HomePage> {
 
                     children: <Widget>[
 
-                      Text("Welcome Sehaj",style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 25),),
+                      Text("Welcome "+name,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 25),),
                     ],
                   ),
                 ),
@@ -235,7 +270,15 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-        ),
+        ):showLoading(),
+    );
+  }
+  Container showLoading() {
+    return Container(
+      height: double.infinity,
+      child: Center(
+        child: PlatformCircularProgressIndicator(),
+      ),
     );
   }
 }

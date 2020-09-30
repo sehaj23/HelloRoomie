@@ -297,6 +297,7 @@ class _Vacancy5State extends State<Vacancy5> {
         };
 
       var res  = await MyHttp.patch("/api/u/post/update/post/${widget.id}", data);
+      //var res = await MyHttp.post("/upload")
       if(res.statusCode==200 || res.statusCode==201){
         var jsonData = jsonDecode(res.body);
 

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:helloroomie/components/button.dart';
 import 'package:helloroomie/components/progress.dart';
 import 'package:helloroomie/views/intro_page3.dart';
+import 'package:helloroomie/views/login/signup.dart';
 
 import '../appColors.dart';
 class FindRoomMates extends StatelessWidget {
@@ -69,7 +70,7 @@ class FindRoomMates extends StatelessWidget {
 
 
               Button.UsableButton("Let's Go", AppColors.textColor, (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>IntroName()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
 
               },Colors.white),
               SizedBox(height: 50,),

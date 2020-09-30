@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:helloroomie/components/button.dart';
 import 'package:helloroomie/components/progress.dart';
+import 'package:helloroomie/components/toast.dart';
 
 import '../appColors.dart';
+import '../myHttp.dart';
 import 'intro_page4.dart';
 
 class IntroName extends StatefulWidget {
@@ -14,6 +17,35 @@ class IntroName extends StatefulWidget {
 
 class _IntroNameState extends State<IntroName> {
   String name;
+
+
+  _updateInfo()async{
+
+    try{
+      var data = {
+        "name":name
+      };
+      var res= await MyHttp.patch("/api/u/profile/update/",data);
+      if(res.statusCode==200){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Details(name)));
+
+      }else{
+        print(res.statusCode);
+      }
+
+    }catch(e){
+      print("error "+e);
+    }
+
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +137,8 @@ class _IntroNameState extends State<IntroName> {
                 Center(
                   child:Button.UsableButton("Next", AppColors.textColor, (){
                     if(name.isNotEmpty){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Details(name)));
+                      _updateInfo();
+
                     }
                   },Colors.white),
                 )

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:helloroomie/components/button.dart';
+import 'package:helloroomie/views/home_page/home_page.dart';
 import 'package:helloroomie/views/login/login.dart';
 import 'package:helloroomie/views/login/signup.dart';
 
 
 import '../appColors.dart';
+import '../myHttp.dart';
 
 class Details extends StatefulWidget {
   String name;
@@ -16,6 +18,8 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
 int _radioValue;
+int _flat;
+bool lookingforFlat;
 String _result;
 String state;
 String city;
@@ -37,6 +41,49 @@ String empStatus;
       }
       });
   }
+void _handleRadioLooking(int value) {
+  setState(() {
+    _flat = value;
+
+    switch (_flat) {
+      case 0:
+        lookingforFlat = true;
+        break;
+      case 1:
+        lookingforFlat = false;
+        break;
+
+    }
+  });
+}
+_updateInfo()async{
+
+  try{
+    var data = {
+      "gender":_result,
+      "age":age,
+      "state":state,
+      "native_city":city,
+      "employment_status":empStatus,
+      "looking_for_flat":lookingforFlat
+    };
+    var res= await MyHttp.patch("/api/u/profile/update/",data);
+    if(res.statusCode==200){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+
+    }else{
+      print(res.statusCode);
+      print(res.body);
+    }
+
+  }catch(e){
+    print("error "+e);
+  }
+
+
+}
+
+
   @override
   void initState() {
 
@@ -198,12 +245,44 @@ String empStatus;
                   }).toList(),
                 ),
 
-                SizedBox(height: 40,),
+                SizedBox(height: 20,),
+                Text(
+                  'Looking for flat',style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      focusColor: Colors.white,
+
+                      value: 0,
+                      activeColor: Colors.white,
+                      groupValue: _flat,
+                      onChanged: _handleRadioLooking,
+                    ),
+                    Text("True",style: TextStyle(color: Colors.white),)
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    new Radio(
+                      value: 1,
+                      activeColor: Colors.white,
+                      groupValue: _flat,
+                      onChanged: _handleRadioLooking,
+                    ),
+                    Text("False",style: TextStyle(color: Colors.white),)
+                  ],
+                ),
+                SizedBox(height: 20),
                 Button.UsableButton("Next", AppColors.textColor, (){
+                  _updateInfo();
                //   if(age.isNotEmpty && city.isNotEmpty &&  state.isNotEmpty && _result.isNotEmpty){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+
                 //  }
-                },Colors.white)
+                },Colors.white),
+
+
 
 
               ],

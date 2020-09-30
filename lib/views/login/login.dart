@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:helloroomie/components/button.dart';
 import 'package:helloroomie/components/toast.dart';
 import 'package:helloroomie/myHttp.dart';
+import 'package:helloroomie/views/home_page/home_page.dart';
 import 'package:helloroomie/views/login/signup.dart';
 import 'package:helloroomie/views/post_vacancy/vacancypage1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -330,7 +331,7 @@ class _LoginState extends State<Login> {
 
 // Here you can write your code
 
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Vacancy1()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
 
 
 

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:helloroomie/models/proprty.dart';
+import 'package:helloroomie/models/user.dart';
 import 'package:helloroomie/views/property_view/property.dart';
 
 import '../../appColors.dart';
@@ -20,41 +21,42 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   var width;
   var height;
-  List<Property> _property =[];
-  Property pr;
+  bool _loading=false;
+  List<User> _user =[];
+ User user;
 
   @override
   void initState() {
-    _getAllFlats();
+    _getUsers();
     // TODO: implement initState
     super.initState();
   }
 
-  _getAllFlats()async{
+  _getUsers()async{
+    setState(() {
+      _loading=true;
+    });
     try{
-      var res  = await MyHttp.get("/api/u/post/fetch");
-      if(res.statusCode==200 || res.statusCode==201){
+      var res= await MyHttp.get("/api/u/profile/fetch/lff");
+      if(res.statusCode==200){
         var data = json.decode(res.body);
-
-        for(var u in data){
-          pr = Property.fromJson(u);
-          _property.add(pr);
-
+        for(var u in data) {
+          user = User.fromJson(u);
+          _user.add(user);
         }
-        print(_property.length);
+        print(_user);
 
-
+        setState(() {
+          _loading=false;
+        });
       }else{
         print(res.statusCode);
       }
-      setState(() {
-
-      });
-
 
     }catch(e){
-      print("ERROR"+e);
+      print("error "+e);
     }
+
   }
 
   @override
@@ -119,9 +121,9 @@ class _UserListState extends State<UserList> {
                                   Expanded(
                                     child: ListView.builder
                                       (
-                                        itemCount: _property.length,
+                                        itemCount: _user.length,
                                         itemBuilder: (BuildContext ctxt, int index) {
-                                          return cardList(_property,index);
+                                          return cardList(_user,index);
                                         }
                                     ),
                                   )
@@ -135,10 +137,10 @@ class _UserListState extends State<UserList> {
                     ]))));
   }
 
-  Widget cardList(List<Property> _pr,int i){
+  Widget cardList(List<User> _user,int i){
     return  InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertyView(_property[i].id)));
+     //   Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertyView(_property[i].id)));
       },
       child: FittedBox(
         child: Card(
@@ -160,7 +162,7 @@ class _UserListState extends State<UserList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: 'https://images.nobroker.in/images/ff80818165ff7a3d0166009c47fc7ad1/ff80818165ff7a3d0166009c47fc7ad1_78010_large.jpg',
+                          imageUrl:  'https://lh3.googleusercontent.com/proxy/rtBXMRCBArK-gPa1wVt8ZoMMTfwjK9jXc1dPs9wf9_S6DNyK63GrM3_2A0znaxbbB8Rk30OFs6Y4rLCrLsuH1hIQM8AVfPQPFAJQdBgDQpGataVl-_mLdiX1ax1OxVEHf2BJA2KNgOb1JGjYI9yV',
                           imageBuilder: (context, imageProvider) => Container(
                             width: 110.0,
                             height: 110.0,
@@ -181,11 +183,13 @@ class _UserListState extends State<UserList> {
                             children: <Widget>[
 
                               SizedBox(height: 15,),
-                              Text(_property[i].title.toUpperCase(),style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 20),),
+                              Text(_user[i].name.toUpperCase(),style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w700,fontSize: 20),),
                               SizedBox(height: 3,),
-                              Text("Hometown:" +_property[i].rent,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+                              Text("Email:" +_user[i].email,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
                               SizedBox(height: 3,),
-                              Text("Hobbies:" +_property[i].vacancy_type,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+                              Text("Mobile:" +_user[i].mobile,style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
+                              SizedBox(height: 3,),
+                              Text("Habits" +_user[i].habits.toString(),style: TextStyle(color: AppColors.textColor,fontWeight: FontWeight.w400,fontSize: 15),),
 
 
 

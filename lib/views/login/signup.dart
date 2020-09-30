@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:helloroomie/components/button.dart';
 import 'package:helloroomie/components/toast.dart';
+import 'package:helloroomie/views/intro_page3.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../appColors.dart';
 import '../../myHttp.dart';
@@ -350,6 +354,11 @@ class _SignupState extends State<Signup> {
       };
       var res  = await MyHttp.post("/api/u/login/create/", data);
       if(res.statusCode==200||res.statusCode==201){
+        var jsonData = jsonDecode(res.body);
+        print(jsonData);
+        // set response value in sharedPreference for future api calls.
+        var sharedPreference = await SharedPreferences.getInstance();
+        sharedPreference.setString("token", jsonData["token"]);
         showCupertinoModalPopup(
             context: context,
             builder: (ctx) {
@@ -362,7 +371,7 @@ class _SignupState extends State<Signup> {
         Future.delayed(const Duration(milliseconds: 800), () {
 
 // Here you can write your code
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>IntroName()));
 
         });
 

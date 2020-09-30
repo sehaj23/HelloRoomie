@@ -111,8 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
              Button.UsableButton("Get Started", AppColors.textColor, (){
-               // Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>FindRoomie()));
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
 
             //   Navigator.push(context, MaterialPageRoute(builder: (context)=>PropertyView()));
              //  Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));

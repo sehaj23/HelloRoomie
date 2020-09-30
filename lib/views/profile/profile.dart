@@ -54,7 +54,6 @@ class _ProfileState extends State<Profile> {
       print("error "+e);
     }
 
-
   }
 
 

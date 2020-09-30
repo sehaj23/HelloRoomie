@@ -96,6 +96,7 @@ class _PropertyViewState extends State<PropertyView> {
 
       }else{
         print(res.statusCode);
+        print(res.body);
       }
 
 
@@ -187,7 +188,7 @@ class _PropertyViewState extends State<PropertyView> {
 
                             ),
                             color: AppColors.textColor,
-                            child: Text("Book"),
+                            child: Text("Chat"),
                             onPressed: (){
 
                             },
