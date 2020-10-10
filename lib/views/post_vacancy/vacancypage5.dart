@@ -255,7 +255,7 @@ class _Vacancy5State extends State<Vacancy5> {
     var sp = await SharedPreferences.getInstance();
     String token = sp.getString("token");
     var request =
-    new http.MultipartRequest("POST", Uri.parse(MyUrl.url("/api/u/post/update/photos/${widget.id}")));
+    new http.MultipartRequest("POST", Uri.parse(MyUrl.url("/upload")));
     request.headers["authorization"] = "Bearer $token";
 
     //only if images are changed, create multipart requests
