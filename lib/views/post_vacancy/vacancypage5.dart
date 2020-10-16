@@ -38,6 +38,7 @@ class _Vacancy5State extends State<Vacancy5> {
   String _result;
   DateTime selectedDate = DateTime.now();
   List<File> imageFiles = [null];
+  var imageUrl;
 
 
   @override
@@ -247,53 +248,50 @@ class _Vacancy5State extends State<Vacancy5> {
     setState(() {
 
       imageFiles[imageNum] = croppedFile;
-      _changepicture(imageFiles[0]);
+     // _postImageToServer(imageFiles[0]);
+      _changeGrouppicture(imageFiles[0]);
     });
   }
-  void _changepicture(File file) async{
+  Future<void> _changeGrouppicture(File image) async {
+    print("reached here");
+    // get the token from the sharedPreferences.
+    var sharedPreference = await SharedPreferences.getInstance();
+    String tempURL =
+        MyUrl.url("/upload");
 
-    var sp = await SharedPreferences.getInstance();
-    String token = sp.getString("token");
-    var request =
-    new http.MultipartRequest("POST", Uri.parse(MyUrl.url("/upload")));
-    request.headers["authorization"] = "Bearer $token";
-
-    //only if images are changed, create multipart requests
-    var imageStream = file.readAsBytes().asStream();
-    var f = http.MultipartFile('file', imageStream, file.lengthSync(),
-        filename: file.path);
-
-    request.fields['tag'] = file.toString();
-    request.files.add(f);
-
+    var request = new http.MultipartRequest("POST", Uri.parse(tempURL));
+    request.headers["authorization"] = sharedPreference.getString("token");
+    // prepare file to send.
+    var profilePhoto = http.MultipartFile(
+        'image', image.readAsBytes().asStream(), image.lengthSync(),
+        filename: image.path);
+    request.files.add(profilePhoto);
     try {
-      var res = await request.send();
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        print("Uploaded");
+      // send files to server.
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var a;
+       // now we will update the data with the
+        response.stream.bytesToString().asStream().listen((data) {
 
-        var response = await http.Response.fromStream(res);
-        if (response != null) {
+      var body  = json.decode(data);
+      imageUrl = body["imageUrl"];
+      print(imageUrl);
 
-          var body = json.decode(response.body);
-          print(body);
-
-        }
-      } else {
-        print("Error ${res.statusCode}");
-        setState(() {
-          print( "An Error has occured with statuscode " +
-              res.statusCode.toString());
         });
+      } else {
+        print("res status code in upload func : ${response.statusCode}");
+        Navigator.pop(context);
       }
-    } catch (e) {
-      print(e.toString());
+    } catch (error) {
+      print("Error : $error");
     }
-
   }
   void _updatePost()async {
     try{
       var data = {
-        "description":description
+        "description":description,
+        "profile_pic":imageUrl
         };
 
       var res  = await MyHttp.patch("/api/u/post/update/post/${widget.id}", data);

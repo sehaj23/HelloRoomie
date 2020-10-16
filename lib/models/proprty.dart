@@ -4,6 +4,7 @@ import 'package:helloroomie/models/address.dart';
 
 class Property{
   String available_from;
+  String imageUrl;
   String id;
   String title;
   String locality;
@@ -23,6 +24,7 @@ class Property{
     this.vacancy_type=json["vacancy_type"];
     this.open_to=json["open_to"];
     this.rent=json["rent"];
+    this.imageUrl=(json["profile_pic"] != null)? json["profile_pic"] :  "https://bsmedia.business-standard.com/_media/bs/img/article/2018-06/08/full/1528397457-4687.jpg";
     this.deposite=json["deposite"];
     this.author=json["author"];
     this.description=json["description"];

@@ -160,7 +160,7 @@ class _PropertListState extends State<PropertList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: 'https://images.nobroker.in/images/ff80818165ff7a3d0166009c47fc7ad1/ff80818165ff7a3d0166009c47fc7ad1_78010_large.jpg',
+                          imageUrl:_property[i].imageUrl,
                           imageBuilder: (context, imageProvider) => Container(
                             width: 110.0,
                             height: 110.0,
